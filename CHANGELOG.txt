@@ -1,1 +1,12 @@
-Place your change log text here.  This file will be incorporated with your app at package time.
+== TODO
+* Make Logos
+* Store login infomation
+* Navigation flow / Show indicator on load,
+* Do some commands / restart, set dynos and etc...
+
+== HEAD
+* Login flow (POST /login)
+* List my apps (GET /apps with basic auth)
+
+== 0.00
+Init
