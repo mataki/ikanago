@@ -15,7 +15,7 @@ var client = function(method, path, options){
   var onerrorCallback = options.onerrorCallback;
   xhr.onerror = function(){
     Ti.API.debug("Failed to request");
-    // Ti.API.debug(this.responseText);
+    Ti.API.debug(this.responseText);
 
     if(onerrorCallback){
       onerrorCallback.call(this);
@@ -27,7 +27,7 @@ var client = function(method, path, options){
 
   var login = options.login;
   if(login){
-    var authstr = 'Basic ' +Titanium.Utils.base64encode(login.email+':'+login.apiKey);
+    var authstr = 'Basic ' + Ti.Utils.base64encode(login.email+':'+login.apiKey);
     xhr.setRequestHeader('Authorization', authstr);
   }
 

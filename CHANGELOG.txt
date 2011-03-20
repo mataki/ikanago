@@ -5,6 +5,7 @@
 ** set dynos
 ** console
 * Navigation flow / Show indicator on load,
+* Request error on iPhone Basic Auth
 
 == HEAD
 * Message heroku to restart app
