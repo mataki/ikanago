@@ -72,7 +72,7 @@ submitButton.addEventListener('click', function(){
                                 var password = passwordField.value;
                                 heroku.login(email, password, function(result, data){
                                                if (result) {
-                                                 Ti.API.debug('Set data' + data);
+                                                 Ti.API.debug('Set data: ' + data.email + "/" + data.apiKey);
                                                  Ti.App.login = data;
                                                  win.hide();
                                                  win2.open(

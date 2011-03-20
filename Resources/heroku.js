@@ -1,66 +1,83 @@
-exports.login = function(email, password, callback){
+var client = function(method, path, options){
   var xhr = Ti.Network.createHTTPClient();
-  xhr.timeout = 10000000;
+  xhr.timeout = 1000000;
+
+  var onloadCallback = options.onloadCallback;
   xhr.onload = function(){
-    Ti.API.debug('Login success!');
-    var result = JSON.parse(this.responseText);
-    callback.call(this, true, {email: result.email, apiKey: result.api_key});
-  };
-  xhr.onerror = function(){
-    Ti.API.debug('Login fail');
-    callback.call(this, false);
+    Ti.API.debug("Success to request");
+    // Ti.API.debug(this.responseText);
+
+    if(onloadCallback){
+      onloadCallback.call(this);
+    }
   };
 
-  xhr.open('POST', 'https://api.heroku.com/login');
+  var onerrorCallback = options.onerrorCallback;
+  xhr.onerror = function(){
+    Ti.API.debug("Failed to request");
+    // Ti.API.debug(this.responseText);
+
+    if(onerrorCallback){
+      onerrorCallback.call(this);
+    }
+  };
+
+  Ti.API.debug("METHOD: " + method + ' / URL: https://api.heroku.com' + path);
+  xhr.open(method, 'https://api.heroku.com' + path);
+
+  var login = options.login;
+  if(login){
+    var authstr = 'Basic ' +Titanium.Utils.base64encode(login.email+':'+login.apiKey);
+    xhr.setRequestHeader('Authorization', authstr);
+  }
+
+  xhr.setRequestHeader('X-Heroku-API-Version', '2');
   xhr.setRequestHeader("Content-Type","application/json");
-  xhr.send(JSON.stringify({username: email, password: password}));
+
+  var postBody = options.postBody;
+  if(postBody){
+    xhr.send(JSON.stringify(postBody));
+  } else {
+    xhr.send();
+  }
+};
+
+exports.login = function(email, password, callback){
+  client('POST', "/login", {
+           onloadCallback: function(){
+             var result = JSON.parse(this.responseText);
+             callback.call(this, true, {email: result.email, apiKey: result.api_key});
+           },
+           onerrorCallback: function(){
+             callback.call(this, false);
+           },
+           postBody: {username: email, password: password}
+         });
 };
 
 exports.list = function(login, callback){
-  var xhr = Ti.Network.createHTTPClient();
-  xhr.timeout = 10000000;
-  xhr.onload = function(){
-    Ti.API.debug("Success to get apps.");
-    var result = JSON.parse(this.responseText);
-    callback.call(this, result);
-  };
-  xhr.onerror = function(){
-    Ti.API.debug("Failed to get apps.");
-    callback.call(this);
-  };
-  xhr.open('GET', 'https://api.heroku.com/apps');
-
-  var authstr = 'Basic ' +Titanium.Utils.base64encode(login.email+':'+login.apiKey);
-  xhr.setRequestHeader('Authorization', authstr);
-
-  xhr.setRequestHeader('X-Heroku-API-Version', '2');
-  xhr.setRequestHeader("Content-Type","application/json");
-
-  xhr.send();
+  client('GET', "/apps", {
+           onloadCallback: function(){
+             var result = JSON.parse(this.responseText);
+             callback.call(this, result);
+           },
+           onerrorCallback: function(){
+             callback.call(this, false);
+           },
+           login: login
+         });
 };
 
+
 exports.restart = function(login, appName, callback){
-  var xhr = Ti.Network.createHTTPClient();
-  xhr.timeout = 1000000;
-  xhr.onload = function(){
-    Ti.API.debug("Success to restart");
-    Ti.API.debug(this.responseText);
-    callback.call(this, true);
-  };
-  xhr.onerror = function(){
-    Ti.API.debug("Failed to restart");
-    Ti.API.debug(this.responseText);
-    callback.call(this, false);
-  };
-
-  Ti.API.debug("URL: " + 'https://api.heroku.com/apps/' + appName + "/server");
-  xhr.open('DELETE', 'https://api.heroku.com/apps/' + appName + "/server");
-
-  var authstr = 'Basic ' +Titanium.Utils.base64encode(login.email+':'+login.apiKey);
-  xhr.setRequestHeader('Authorization', authstr);
-
-  xhr.setRequestHeader('X-Heroku-API-Version', '2');
-  xhr.setRequestHeader("Content-Type","application/json");
-
-  xhr.send();
+  var path = '/apps/' + appName + '/server';
+  client('DELETE', path, {
+           onloadCallback: function(){
+             callback.call(this, true);
+           },
+           onerrorCallback: function(){
+             callback.call(this, false);
+           },
+           login: login
+         });
 };
