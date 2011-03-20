@@ -77,7 +77,6 @@ submitButton.addEventListener('click', function(){
                                                  win.hide();
                                                  win2.open(
                                                    {
-                                                     backgroundColor: "#000",
                                                      transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
                                                    }
                                                  );

@@ -1,12 +1,15 @@
 == TODO
 * Make Logos
 * Store login infomation
+* Do some commands
+** set dynos
+** console
 * Navigation flow / Show indicator on load,
-* Do some commands / restart, set dynos and etc...
 
 == HEAD
-* Login flow (POST /login)
+* Message heroku to restart app
 * List my apps (GET /apps with basic auth)
+* Login flow (POST /login)
 
 == 0.00
 Init

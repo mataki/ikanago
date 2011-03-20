@@ -38,3 +38,29 @@ exports.list = function(login, callback){
 
   xhr.send();
 };
+
+exports.restart = function(login, appName, callback){
+  var xhr = Ti.Network.createHTTPClient();
+  xhr.timeout = 1000000;
+  xhr.onload = function(){
+    Ti.API.debug("Success to restart");
+    Ti.API.debug(this.responseText);
+    callback.call(this, true);
+  };
+  xhr.onerror = function(){
+    Ti.API.debug("Failed to restart");
+    Ti.API.debug(this.responseText);
+    callback.call(this, false);
+  };
+
+  Ti.API.debug("URL: " + 'https://api.heroku.com/apps/' + appName + "/server");
+  xhr.open('DELETE', 'https://api.heroku.com/apps/' + appName + "/server");
+
+  var authstr = 'Basic ' +Titanium.Utils.base64encode(login.email+':'+login.apiKey);
+  xhr.setRequestHeader('Authorization', authstr);
+
+  xhr.setRequestHeader('X-Heroku-API-Version', '2');
+  xhr.setRequestHeader("Content-Type","application/json");
+
+  xhr.send();
+};
