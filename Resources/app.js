@@ -1,17 +1,21 @@
 // this sets the background color of the master UIView (when there are no windows/tab groups on it)
 Titanium.UI.setBackgroundColor('#000');
 
-var comm = require('comm');
+var tabGroup = Ti.UI.createTabGroup();
 
-var login = comm.getLogin();
+var appsWin = Ti.UI.createWindow({id: 'AppList',
+                                  title: "Applications",
+                                  url: 'app_list.js'});
+var appsTab = Ti.UI.createTab({title: "Applications",
+                               window: appsWin});
 
-if(login){
-  var win2 = Titanium.UI.createWindow({id: 'AppList',
-                                       url: 'app_list.js'});
-  win2.open({transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
-} else {
-  var win = Titanium.UI.createWindow({id: 'loginWindow',
-                                      url: 'login.js'});
+var accountWin = Ti.UI.createWindow({id: "Account",
+                                     title: "Account",
+                                     url: "account.js"});
+var accountTab = Ti.UI.createTab({title: "Account",
+                                  window: accountWin});
 
-  win.open({transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
-}
+tabGroup.addTab(appsTab);
+tabGroup.addTab(accountTab);
+
+tabGroup.open();

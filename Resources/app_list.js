@@ -5,16 +5,35 @@ var win = Ti.UI.currentWindow;
 
 var tView = Ti.UI.createTableView();
 
-heroku.list(comm.getLogin(), function(list){
-              if(list && list.length > 0){
-                for(var i=0; i < list.length; i++){
-                  tView.appendRow({title: list[i].name});
+var loadApps = function(){
+  heroku.list(comm.getLogin(), function(list){
+                var data = [];
+                if(list && list.length > 0){
+                  for(var i=0; i < list.length; i++){
+                    data.push({title: list[i].name});
+                  }
+                  tView.setData(data);
+                } else {
+                  Ti.API.debug(this.responseText);
+                  alert("Login failed or you have no apps");
                 }
-              } else {
-                Ti.API.debug(this.responseText);
-                alert("Login failed or you have no apps");
-              }
-            });
+              });
+};
+
+var initView = function(){
+  var login = comm.getLogin();
+
+  if(!login){
+    var loginWindow = Titanium.UI.createWindow({id: 'loginWindow',
+                                                url: 'login.js',
+                                                backgroundColor:'#800517'
+                                               });
+    loginWindow.open({modal:true});
+  } else {
+    loadApps();
+  }
+};
+initView();
 
 tView.addEventListener('click', function(e){
                          var appName = e.rowData.title;
@@ -25,27 +44,11 @@ tView.addEventListener('click', function(e){
                              id: 'Commands'
                            }
                          );
-                         win.hide();
-                         win2.open(
-                           {
-                             transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
-                           }
-                         );
+                         Ti.UI.currentTab.open(win2);
                        });
 
 win.add(tView);
 
-var logoutButton = Ti.UI.createButton({
-                                        title: "Logout",
-                                        bottom: 10,
-                                        height: 50,
-                                        width: 150
-                                      });
-logoutButton.addEventListener('click', function(){
-                                comm.removeLogin();
-                                win.close();
-                                var loginWindow = Titanium.UI.createWindow({id: 'loginWindow',
-                                                                            url: 'login.js'});
-                                loginWindow.open({transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
+Titanium.App.addEventListener('account_reloaded', function(){
+                                initView();
                               });
-win.add(logoutButton);

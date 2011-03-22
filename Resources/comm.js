@@ -46,4 +46,5 @@ exports.removeLogin = function(){
   if(file.exists()){
     file.deleteFile();
   }
+  Ti.App.login = null;
 };
