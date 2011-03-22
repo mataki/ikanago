@@ -1,4 +1,5 @@
 var heroku = require("heroku");
+var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 var appName = win.title;
@@ -26,7 +27,7 @@ var restartButton = Ti.UI.createButton(
 
 win.add(restartButton);
 restartButton.addEventListener('click', function(){
-                                 heroku.restart(Ti.App.login, appName, function(result){
+                                 heroku.restart(comm.getLogin(), appName, function(result){
                                                   alert(result);
                                                 });
                                });

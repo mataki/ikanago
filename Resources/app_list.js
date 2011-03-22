@@ -1,10 +1,11 @@
 var heroku = require("heroku");
+var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
 var tView = Ti.UI.createTableView();
 
-heroku.list(Ti.App.login, function(list){
+heroku.list(comm.getLogin(), function(list){
               if(list && list.length > 0){
                 for(var i=0; i < list.length; i++){
                   tView.appendRow({title: list[i].name});
@@ -33,3 +34,18 @@ tView.addEventListener('click', function(e){
                        });
 
 win.add(tView);
+
+var logoutButton = Ti.UI.createButton({
+                                        title: "Logout",
+                                        bottom: 10,
+                                        height: 50,
+                                        width: 150
+                                      });
+logoutButton.addEventListener('click', function(){
+                                comm.removeLogin();
+                                win.close();
+                                var loginWindow = Titanium.UI.createWindow({id: 'loginWindow',
+                                                                            url: 'login.js'});
+                                loginWindow.open({transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
+                              });
+win.add(logoutButton);

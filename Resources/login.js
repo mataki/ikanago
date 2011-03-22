@@ -1,4 +1,5 @@
 var heroku = require("heroku");
+var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
@@ -60,26 +61,17 @@ var submitButton = Titanium.UI.createButton(
 );
 win.add(submitButton);
 
-var win2 = Titanium.UI.createWindow(
-  {
-    id: 'AppList',
-    url: 'app_list.js'
-  }
-);
+var win2 = Titanium.UI.createWindow({id: 'AppList',
+                                     url: 'app_list.js'});
 
 submitButton.addEventListener('click', function(){
                                 var email = emailField.value;
                                 var password = passwordField.value;
                                 heroku.login(email, password, function(result, data){
                                                if (result) {
-                                                 Ti.API.debug('Set data: ' + data.email + "/" + data.apiKey);
-                                                 Ti.App.login = data;
+                                                 comm.storeLogin(data);
                                                  win.hide();
-                                                 win2.open(
-                                                   {
-                                                     transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT
-                                                   }
-                                                 );
+                                                 win2.open({transition: Titanium.UI.iPhone.AnimationStyle.FLIP_FROM_LEFT});
                                                }
                                              });
                               });

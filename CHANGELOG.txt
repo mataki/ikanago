@@ -1,13 +1,13 @@
 == TODO
 * Make Logos
-* Store login infomation
+* Request error on iPhone Basic Auth
 * Do some commands
 ** set dynos
 ** console
 * Navigation flow / Show indicator on load,
-* Request error on iPhone Basic Auth
 
 == HEAD
+* Store login infomation
 * Message heroku to restart app
 * List my apps (GET /apps with basic auth)
 * Login flow (POST /login)
