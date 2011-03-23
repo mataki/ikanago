@@ -4,9 +4,9 @@
 * Do some commands
 ** set dynos
 ** console
-* Navigation flow / Show indicator on load,
 
 == HEAD
+* Navigation flow / Show indicator on load,
 * Store login infomation
 * Message heroku to restart app
 * List my apps (GET /apps with basic auth)

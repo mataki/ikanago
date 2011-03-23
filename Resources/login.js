@@ -46,14 +46,25 @@ formView.add(submitButton);
 
 win.add(formView);
 
+var actInd = Titanium.UI.createActivityIndicator({bottom:10,
+                                                  height:50,
+                                                  width:10,
+                                                  message: "Loggin in...",
+                                                  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN});
+win.add(actInd);
+
 submitButton.addEventListener('click', function(){
                                 var email = emailField.value;
                                 var password = passwordField.value;
+                                actInd.show();
                                 heroku.login(email, password, function(result, data){
+                                               actInd.hide();
                                                if (result) {
                                                  comm.storeLogin(data);
                                                  win.close();
                                                  Titanium.App.fireEvent('account_reloaded');
+                                               } else {
+                                                 alert('Login failed!');
                                                }
                                              });
                               });

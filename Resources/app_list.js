@@ -3,10 +3,19 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
+var actInd = Titanium.UI.createActivityIndicator({bottom:10,
+                                                  height:50,
+                                                  width:10,
+                                                  message: "Loading...",
+                                                  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN});
+win.add(actInd);
+
 var tView = Ti.UI.createTableView();
 
 var loadApps = function(){
+  actInd.show();
   heroku.list(comm.getLogin(), function(list){
+                actInd.hide();
                 var data = [];
                 if(list && list.length > 0){
                   for(var i=0; i < list.length; i++){

@@ -2,6 +2,13 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
+var actInd = Titanium.UI.createActivityIndicator({bottom:10,
+                                                  height:50,
+                                                  width:10,
+                                                  message: "Logged out...",
+                                                  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN});
+win.add(actInd);
+
 var getLoginStr = function(){
   var login = comm.getLogin(), email;
 
@@ -27,6 +34,7 @@ var logoutButton = Ti.UI.createButton({title: "Logout",
                                        width: 150});
 
 logoutButton.addEventListener('click', function(){
+                                actInd.show();
                                 comm.removeLogin();
                                 Titanium.App.fireEvent('account_reloaded');
                               });
@@ -34,6 +42,7 @@ logoutButton.addEventListener('click', function(){
 win.add(logoutButton);
 
 Titanium.App.addEventListener('account_reloaded', function(){
+                                actInd.hide();
                                 emailLabel.text = getLoginStr();
                               });
 
