@@ -2,10 +2,11 @@
 * Make Logos
 * Request error on iPhone Basic Auth
 * Do some commands
-** set dynos
 ** console
 
 == HEAD
+* Set dynos
+* Mange maintenance mode
 * Navigation flow / Show indicator on load,
 * Store login infomation
 * Message heroku to restart app

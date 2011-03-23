@@ -32,7 +32,8 @@ var client = function(method, path, options){
   }
 
   xhr.setRequestHeader('X-Heroku-API-Version', '2');
-  xhr.setRequestHeader("Content-Type","application/json");
+  var contentType = options.contentType;
+  xhr.setRequestHeader("Content-Type", (contentType == null) ? "application/json" : contentType);
 
   var postBody = options.postBody;
   if(postBody){
@@ -94,5 +95,39 @@ exports.maintenance = function(login, appName, status, callback){
            },
            login: login,
            postBody: {maintenance_mode: mode}
+         });
+};
+
+exports.info = function(login, appName, callback){
+  var path = "/apps/" + appName;
+  client('GET', path, {
+           onloadCallback: function(){
+             var doc = this.responseXML.documentElement;
+             var dynos = doc.getElementsByTagName('dynos').item(0).text;
+             callback.call(this, {dynos: dynos});
+           },
+           onerrorCallback: function(){
+             Ti.API.debug(this.responseText);
+             callback.call(this, null);
+           },
+           login: login,
+           contentType: "application/xml"
+         });
+};
+
+exports.setDynos = function(login, appName, qty, callback){
+  var path = "/apps/" + appName + "/dynos";
+  client("PUT", path, {
+           onloadCallback: function(){
+             var result = this.responseText;
+             Ti.API.debug("Update dynos: " + result);
+             callback.call(this, result);
+           },
+           onerrorCallback: function(){
+             Ti.API.debug(this.responseText);
+             callback.call(this, null);
+           },
+           login: login,
+           postBody: {dynos: qty}
          });
 };
