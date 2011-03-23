@@ -3,11 +3,7 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
-var actInd = Titanium.UI.createActivityIndicator({bottom:10,
-                                                  height:50,
-                                                  width:10,
-                                                  message: "Loading...",
-                                                  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN});
+var actInd = Titanium.UI.createActivityIndicator({message: "Loading..."});
 win.add(actInd);
 
 var tView = Ti.UI.createTableView();
@@ -35,7 +31,7 @@ var initView = function(){
   if(!login){
     var loginWindow = Titanium.UI.createWindow({id: 'loginWindow',
                                                 url: 'login.js',
-                                                backgroundColor:'#800517'
+                                                backgroundColor: '#800517'
                                                });
     loginWindow.open({modal:true});
   } else {
@@ -58,6 +54,6 @@ tView.addEventListener('click', function(e){
 
 win.add(tView);
 
-Titanium.App.addEventListener('account_reloaded', function(){
-                                initView();
-                              });
+Ti.App.addEventListener('account_reloaded', function(){
+                          initView();
+                        });

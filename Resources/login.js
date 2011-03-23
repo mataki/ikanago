@@ -46,11 +46,7 @@ formView.add(submitButton);
 
 win.add(formView);
 
-var actInd = Titanium.UI.createActivityIndicator({bottom:10,
-                                                  height:50,
-                                                  width:10,
-                                                  message: "Loggin in...",
-                                                  style:Titanium.UI.iPhone.ActivityIndicatorStyle.PLAIN});
+var actInd = Titanium.UI.createActivityIndicator({message: "Loggin in..."});
 win.add(actInd);
 
 submitButton.addEventListener('click', function(){

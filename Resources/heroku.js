@@ -81,3 +81,18 @@ exports.restart = function(login, appName, callback){
            login: login
          });
 };
+
+exports.maintenance = function(login, appName, status, callback){
+  var path = "/apps/" + appName + "/server/maintenance";
+  var mode = status == true ? '1' : '0';
+  client('POST', path, {
+           onloadCallback: function(){
+             callback.call(this, true);
+           },
+           onerrorCallback: function(){
+             callback.call(this, false);
+           },
+           login: login,
+           postBody: {maintenance_mode: mode}
+         });
+};
