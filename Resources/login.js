@@ -3,67 +3,79 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
-var formView = Ti.UI.createView({top: 30,
-                                 left: 0});
+var formView = Ti.UI.createView({
+  top: 30,
+  left: 0
+});
 
-var emailLabel = Titanium.UI.createLabel({color: "#fff",
-                                          text: "Email",
-                                          top: 10,
-                                          left: 30,
-                                          width: 100,
-                                          height: 'auto'});
-var emailField = Titanium.UI.createTextField({hintText: 'Enter your email',
-                                              height: 50,
-                                              top: 35,
-                                              left: 30,
-                                              width: 250,
-                                              borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED});
+var emailLabel = Ti.UI.createLabel({
+  color: "#fff",
+  text: "Email",
+  top: 10,
+  left: 30,
+  width: 100,
+  height: 'auto'
+});
+var emailField = Ti.UI.createTextField({
+  hintText: 'Enter your email',
+  height: 50,
+  top: 35,
+  left: 30,
+  width: 250,
+  borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+});
 formView.add(emailLabel);
 formView.add(emailField);
 
-var passwordLabel = Titanium.UI.createLabel({color: "#fff",
-                                             text: "Password",
-                                             top: 85,
-                                             left: 30,
-                                             width: 100,
-                                             height: 'auto'});
-var passwordField = Titanium.UI.createTextField({hintText: 'Enter your password',
-                                                 height: 50,
-                                                 top: 110,
-                                                 left: 30,
-                                                 width: 250,
-                                                 borderStyle: Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-                                                 passwordMask: true});
+var passwordLabel = Ti.UI.createLabel({
+  color: "#fff",
+  text: "Password",
+  top: 85,
+  left: 30,
+  width: 100,
+  height: 'auto'
+});
+var passwordField = Ti.UI.createTextField({
+  hintText: 'Enter your password',
+  height: 50,
+  top: 110,
+  left: 30,
+  width: 250,
+  borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+  passwordMask: true
+});
 formView.add(passwordLabel);
 formView.add(passwordField);
 
-var submitButton = Titanium.UI.createButton({title: "Login",
-                                             top: 175,
-                                             left: 30,
-                                             height: 50,
-                                             width: 150});
+var submitButton = Ti.UI.createButton({
+  title: "Login",
+  top: 175,
+  left: 30,
+  height: 50,
+  width: 150
+});
 formView.add(submitButton);
 
 win.add(formView);
 
-var actInd = Titanium.UI.createActivityIndicator({message: "Loggin in..."});
+var actInd = Ti.UI.createActivityIndicator({message: "Loggin in..."});
 win.add(actInd);
 
 submitButton.addEventListener('click', function(){
-                                var email = emailField.value;
-                                var password = passwordField.value;
-                                actInd.show();
-                                heroku.login(email, password, function(result, data){
-                                               actInd.hide();
-                                               if (result) {
-                                                 comm.storeLogin(data);
-                                                 win.close();
-                                                 Titanium.App.fireEvent('account_reloaded');
-                                               } else {
-                                                 alert('Login failed!');
-                                               }
-                                             });
-                              });
+  var email = emailField.value;
+  var password = passwordField.value;
+  actInd.show();
+  heroku.login(email, password, function(result, data){
+    actInd.hide();
+    if (result) {
+      comm.storeLogin(data);
+      win.close();
+      Ti.App.fireEvent('account_reloaded');
+    } else {
+      alert('Login failed!');
+    }
+  });
+});
 
 // TODO: Try cool animation form, but not work
 //

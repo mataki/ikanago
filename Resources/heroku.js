@@ -45,89 +45,89 @@ var client = function(method, path, options){
 
 exports.login = function(email, password, callback){
   client('POST', "/login", {
-           onloadCallback: function(){
-             var result = JSON.parse(this.responseText);
-             callback.call(this, true, {email: result.email, apiKey: result.api_key});
-           },
-           onerrorCallback: function(){
-             callback.call(this, false);
-           },
-           postBody: {username: email, password: password}
-         });
+    onloadCallback: function(){
+      var result = JSON.parse(this.responseText);
+      callback.call(this, true, {email: result.email, apiKey: result.api_key});
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    postBody: {username: email, password: password}
+  });
 };
 
 exports.list = function(login, callback){
   client('GET', "/apps", {
-           onloadCallback: function(){
-             var result = JSON.parse(this.responseText);
-             callback.call(this, result);
-           },
-           onerrorCallback: function(){
-             callback.call(this, false);
-           },
-           login: login
-         });
+    onloadCallback: function(){
+      var result = JSON.parse(this.responseText);
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
 };
 
 
 exports.restart = function(login, appName, callback){
   var path = '/apps/' + appName + '/server';
   client('DELETE', path, {
-           onloadCallback: function(){
-             callback.call(this, true);
-           },
-           onerrorCallback: function(){
-             callback.call(this, false);
-           },
-           login: login
-         });
+    onloadCallback: function(){
+      callback.call(this, true);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
 };
 
 exports.maintenance = function(login, appName, status, callback){
   var path = "/apps/" + appName + "/server/maintenance";
   var mode = status == true ? '1' : '0';
   client('POST', path, {
-           onloadCallback: function(){
-             callback.call(this, true);
-           },
-           onerrorCallback: function(){
-             callback.call(this, false);
-           },
-           login: login,
-           postBody: {maintenance_mode: mode}
-         });
+    onloadCallback: function(){
+      callback.call(this, true);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login,
+    postBody: {maintenance_mode: mode}
+  });
 };
 
 exports.info = function(login, appName, callback){
   var path = "/apps/" + appName;
   client('GET', path, {
-           onloadCallback: function(){
-             var doc = this.responseXML.documentElement;
-             var dynos = doc.getElementsByTagName('dynos').item(0).text;
-             callback.call(this, {dynos: dynos});
-           },
-           onerrorCallback: function(){
-             Ti.API.debug(this.responseText);
-             callback.call(this, null);
-           },
-           login: login,
-           contentType: "application/xml"
-         });
+    onloadCallback: function(){
+      var doc = this.responseXML.documentElement;
+      var dynos = doc.getElementsByTagName('dynos').item(0).text;
+      callback.call(this, {dynos: dynos});
+    },
+    onerrorCallback: function(){
+      Ti.API.debug(this.responseText);
+      callback.call(this, null);
+    },
+    login: login,
+    contentType: "application/xml"
+  });
 };
 
 exports.setDynos = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/dynos";
   client("PUT", path, {
-           onloadCallback: function(){
-             var result = this.responseText;
-             Ti.API.debug("Update dynos: " + result);
-             callback.call(this, result);
-           },
-           onerrorCallback: function(){
-             Ti.API.debug(this.responseText);
-             callback.call(this, null);
-           },
-           login: login,
-           postBody: {dynos: qty}
-         });
+    onloadCallback: function(){
+      var result = this.responseText;
+      Ti.API.debug("Update dynos: " + result);
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      Ti.API.debug(this.responseText);
+      callback.call(this, null);
+    },
+    login: login,
+    postBody: {dynos: qty}
+  });
 };

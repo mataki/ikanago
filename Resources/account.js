@@ -16,29 +16,32 @@ var getLoginStr = function(){
   return email;
 };
 
-var emailLabel = Ti.UI.createLabel({color: "#fff",
-                                    text: getLoginStr(),
-                                    top: 10,
-                                    left: 30,
-                                    width: 'auto',
-                                    height: 'auto'});
+var emailLabel = Ti.UI.createLabel({
+  color: "#fff",
+  text: getLoginStr(),
+  top: 10,
+  left: 30,
+  width: 'auto',
+  height: 'auto'
+});
 win.add(emailLabel);
 
-var logoutButton = Ti.UI.createButton({title: "Logout",
-                                       top: 40,
-                                       height: 50,
-                                       width: 150});
+var logoutButton = Ti.UI.createButton({
+  title: "Logout",
+  top: 40,
+  height: 50,
+  width: 150
+});
 
 logoutButton.addEventListener('click', function(){
-                                actInd.show();
-                                comm.removeLogin();
-                                Titanium.App.fireEvent('account_reloaded');
-                              });
+  actInd.show();
+  comm.removeLogin();
+  Titanium.App.fireEvent('account_reloaded');
+});
 
 win.add(logoutButton);
 
 Titanium.App.addEventListener('account_reloaded', function(){
-                                actInd.hide();
-                                emailLabel.text = getLoginStr();
-                              });
-
+  actInd.hide();
+  emailLabel.text = getLoginStr();
+});
