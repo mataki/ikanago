@@ -102,9 +102,26 @@ exports.info = function(login, appName, callback){
   var path = "/apps/" + appName;
   client('GET', path, {
     onloadCallback: function(){
-      var doc = this.responseXML.documentElement;
-      var dynos = doc.getElementsByTagName('dynos').item(0).text;
-      callback.call(this, {dynos: dynos});
+      var doc = this.responseXML.documentElement,
+      dynos = doc.getElementsByTagName('dynos').item(0).text,
+      workers = doc.getElementsByTagName('workers').item(0).text,
+      stack = doc.getElementsByTagName('stack').item(0).text,
+      repo = doc.getElementsByTagName('repo-size').item(0).text,
+      slug = doc.getElementsByTagName('slug-size').item(0).text,
+      data = doc.getElementsByTagName('database_size').item(0).text,
+      appUrl = doc.getElementsByTagName('web_url').item(0).text,
+      gitUrl = doc.getElementsByTagName('git_url').item(0).text;
+
+      callback.call(this, {
+        dynos: dynos,
+        workers: workers,
+        stack: stack,
+        repo: repo,
+        slug: slug,
+        data: data,
+        appUrl: appUrl,
+        gitUrl: gitUrl
+      });
     },
     onerrorCallback: function(){
       Ti.API.debug(this.responseText);
@@ -115,12 +132,11 @@ exports.info = function(login, appName, callback){
   });
 };
 
-exports.setDynos = function(login, appName, qty, callback){
-  var path = "/apps/" + appName + "/dynos";
+var updateDynosOrWorkers = function(login, path, qty, callback){
   client("PUT", path, {
     onloadCallback: function(){
       var result = this.responseText;
-      Ti.API.debug("Update dynos: " + result);
+      Ti.API.debug("Update dynos or workers: " + result);
       callback.call(this, result);
     },
     onerrorCallback: function(){
@@ -130,4 +146,14 @@ exports.setDynos = function(login, appName, qty, callback){
     login: login,
     postBody: {dynos: qty}
   });
+};
+
+exports.setDynos = function(login, appName, qty, callback){
+  var path = "/apps/" + appName + "/dynos";
+  updateDynosOrWorkers(login, appName, path, callback);
+};
+
+exports.setWorkers = function(login, appName, qty, callback){
+  var path = "/apps/" + appName + "/workers";
+  updateDynosOrWorkers(login, appName, path, callback);
 };

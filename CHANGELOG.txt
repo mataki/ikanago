@@ -5,6 +5,7 @@
 ** console
 
 == HEAD
+* Resources page
 * Set dynos
 * Mange maintenance mode
 * Navigation flow / Show indicator on load,
