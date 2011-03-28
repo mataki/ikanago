@@ -170,5 +170,26 @@ exports.addons = function(login, appName, callback){
     },
     login: login
   });
+};
 
+exports.collaborators = function(login, appName, callback){
+  var path = "/apps/" + appName + "/collaborators";
+  client('GET', path, {
+    onloadCallback: function(){
+      var doc = this.responseXML.documentElement,
+      email_nodes = doc.getElementsByTagName('email'),
+      emails = [];
+
+      for(var i=0; i<email_nodes.length; i++){
+        emails.push(email_nodes.item(i).text);
+      }
+
+      callback.call(this, emails);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login,
+    contentType: "application/xml"
+  });
 };

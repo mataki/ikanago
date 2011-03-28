@@ -12,7 +12,6 @@ win.add(tView);
 actInd.show();
 heroku.addons(comm.getLogin(), win.appName, function(list){
   actInd.hide();
-  Ti.API.debug(this.responseText);
   if(list != null && list.length > 0){
     var data = [];
     for(var i=0; i<list.length; i++){
