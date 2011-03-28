@@ -157,3 +157,18 @@ exports.setWorkers = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/workers";
   updateDynosOrWorkers(login, appName, path, callback);
 };
+
+exports.addons = function(login, appName, callback){
+  var path = "/apps/" + appName + "/addons";
+  client('GET', path, {
+    onloadCallback: function(){
+      var result = JSON.parse(this.responseText);
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
+
+};

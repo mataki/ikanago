@@ -1,10 +1,11 @@
 == TODO
 * Make Logos
 * Request error on iPhone Basic Auth
-* Do some commands
-** console
+* Tools / logs, config, rake ,console
+* Collaborators / List add delete
 
 == HEAD
+* Addons
 * Resources page
 * Set dynos
 * Mange maintenance mode
