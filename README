@@ -2,4 +2,10 @@
           Ikanago
 ------------------------------
 
-Ikanago is Heroku mobile client using Titanium.
+Ikanago is Heroku's mobile (Android / iPhone) client using Titanium.
+
+You can paid install from here for Android.
+http://j.mp/ikanago
+
+If you use it free, you should compile and install by Titanium.
+http://www.appcelerator.com/
