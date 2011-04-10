@@ -32,7 +32,7 @@ var initView = function(){
     var loginWindow = Titanium.UI.createWindow({
       id: 'loginWindow',
       url: 'login.js',
-      backgroundColor: '#800517'
+      backgroundColor: '#33c'
     });
     loginWindow.open({modal:true});
   } else {

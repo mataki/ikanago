@@ -1,10 +1,10 @@
 == TODO
-* Make Logos
-* Collaborators / add delete
 * Request error on iPhone Basic Auth
 * Tools / logs, config, rake ,console
 
 == HEAD
+* Make Logos
+* Collaborators / add delete
 * Collaborators / List
 * Addons
 * Resources page
