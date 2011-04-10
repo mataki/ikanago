@@ -193,3 +193,45 @@ exports.collaborators = function(login, appName, callback){
     contentType: "application/xml"
   });
 };
+
+exports.logs = function(login, appName, callback){
+  var path = "/apps/" + appName + "/logs";
+  client('GET', path, {
+    onloadCallback: function(){
+      var result = this.responseText;
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
+};
+
+exports.cronLogs = function(login, appName, callback){
+  var path = "/apps/" + appName + "/cron_logs";
+  client('GET', path, {
+    onloadCallback: function(){
+      var result = this.responseText;
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
+};
+
+exports.configVars = function(login, appName, callback){
+  var path = "/apps/" + appName + "/config_vars";
+  client('GET', path, {
+    onloadCallback: function(){
+      var result = JSON.parse(this.responseText);
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      callback.call(this, false);
+    },
+    login: login
+  });
+};

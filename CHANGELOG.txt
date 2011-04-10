@@ -1,8 +1,9 @@
 == TODO
 * Request error on iPhone Basic Auth
-* Tools / logs, config, rake ,console
+* Tools / rake, console
 
 == HEAD
+* Tools / logs, config
 * Make Logos
 * Collaborators / add delete
 * Collaborators / List
