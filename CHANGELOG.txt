@@ -1,6 +1,7 @@
 == TODO
-* Request error on iPhone Basic Auth
+* New version log
 * Tools / rake, console
+* Request error on iPhone Basic Auth
 
 == HEAD
 * Tools / logs, config

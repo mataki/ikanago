@@ -37,7 +37,13 @@ var client = function(method, path, options){
 
   var postBody = options.postBody;
   if(postBody){
-    xhr.send(JSON.stringify(postBody));
+    var body;
+    if(options.isStrBody && options.isStrBody == true){
+      body = postBody;
+    } else {
+      body = JSON.stringify(postBody);
+    }
+    xhr.send(body);
   } else {
     xhr.send();
   }
@@ -233,5 +239,26 @@ exports.configVars = function(login, appName, callback){
       callback.call(this, false);
     },
     login: login
+  });
+};
+
+// TODO: Need to request with chunks, ref heroku.gem
+exports.rake = function(login, appName, cmd, callback){
+  var path = "/apps/" + appName + "/services";
+  var body = "rake " + cmd;
+  client('POST', path, {
+    onloadCallback: function(){
+      Ti.API.debug(this.responseText);
+      var result = this.responseText;
+      callback.call(this, result);
+    },
+    onerrorCallback: function(){
+      Ti.API.debug(this.responseText);
+      var result = this.responseText;
+      callback.call(this, result);
+    },
+    login: login,
+    postBody: body,
+    isStrBody: true
   });
 };
