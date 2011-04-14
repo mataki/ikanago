@@ -13,11 +13,13 @@ for(var i=1;i<26;i++){
   options25.push(i.toString());
 }
 
+var rightLableOption = {right: 10, text: "", width: 150};
+
 // ---- dynos
 var dynoRow = Ti.UI.createTableViewRow();
 var dynoLabel = Ti.UI.createLabel({text: "Dynos", left:10});
 dynoRow.add(dynoLabel);
-var dynoNum = Ti.UI.createLabel({right: 10});
+var dynoNum = Ti.UI.createLabel(rightLableOption);
 dynoRow.add(dynoNum);
 var dynoDialog = Ti.UI.createOptionDialog({
   options: options25,
@@ -29,7 +31,7 @@ dynoRow.addEventListener('click', function(){
 });
 dynoDialog.addEventListener('click', function(e){
   actInd.show();
-  heroku.setDynos(comm.getLogin(), win.appName, e.index+1, function(result){
+  heroku.adjustDynos(comm.restoreLogin(), win.appName, e.index+1, function(result){
     actInd.hide();
     if(result != null){
       dynoNum.text = result;
@@ -43,7 +45,7 @@ dynoDialog.addEventListener('click', function(e){
 var workerRow = Ti.UI.createTableViewRow();
 var workerLabel = Ti.UI.createLabel({text: "Workers", left: 10});
 workerRow.add(workerLabel);
-var workerNum = Ti.UI.createLabel({right: 10});
+var workerNum = Ti.UI.createLabel(rightLableOption);
 workerRow.add(workerNum);
 var workerDialog = Ti.UI.createOptionDialog({
   options: options25,
@@ -55,7 +57,7 @@ workerRow.addEventListener('click', function(){
 });
 workerDialog.addEventListener('click', function(e){
   actInd.show();
-  heroku.setWorkers(comm.getLogin(), win.appName, e.index+1, function(result){
+  heroku.adjustWorkers(comm.restoreLogin(), win.appName, e.index+1, function(result){
     actInd.hide();
     if(result != null){
       dynoNum.text = result;
@@ -69,7 +71,7 @@ workerDialog.addEventListener('click', function(e){
 var createRow = function(label){
   var row = Ti.UI.createTableViewRow();
   var labelLabel = Ti.UI.createLabel({text: label, left: 10});
-  var valueLabel = Ti.UI.createLabel({right: 10});
+  var valueLabel = Ti.UI.createLabel(rightLableOption);
   row.add(labelLabel);
   row.add(valueLabel);
   return [row, valueLabel];
@@ -81,7 +83,7 @@ var dataArr = createRow('Data');
 
 // ---- URL, Git url
 var urlRow = Ti.UI.createTableViewRow({header: "Urls", hasChild: true});
-var urlLabel = Ti.UI.createLabel({left: 10});
+var urlLabel = Ti.UI.createLabel({left: 10, text: ""});
 urlRow.add(urlLabel);
 urlRow.addEventListener('click', function(){
   var wvWin = Ti.UI.createWindow();
@@ -92,7 +94,7 @@ urlRow.addEventListener('click', function(){
 });
 
 var gitRow = Ti.UI.createTableViewRow();
-var gitLabel = Ti.UI.createLabel({left: 10});
+var gitLabel = Ti.UI.createLabel({left: 10, text: ""});
 gitRow.add(gitLabel);
 
 // ----
@@ -100,7 +102,7 @@ tView.setData([dynoRow, workerRow, stackArr[0], repoArr[0], slugArr[0], dataArr[
 win.add(tView);
 
 actInd.show();
-heroku.info(comm.getLogin(), win.appName, function(result){
+heroku.info(comm.restoreLogin(), win.appName, function(result){
   actInd.hide();
   if(result != null){
     dynoNum.text = result.dynos;

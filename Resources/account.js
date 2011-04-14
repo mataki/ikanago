@@ -6,7 +6,7 @@ var actInd = Ti.UI.createActivityIndicator({message: "Logged out..."});
 win.add(actInd);
 
 var getLoginStr = function(){
-  var login = comm.getLogin(), email;
+  var login = comm.restoreLogin(), email;
 
   if(login && login.email){
     email = login.email;

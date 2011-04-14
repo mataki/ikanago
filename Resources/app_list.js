@@ -10,7 +10,7 @@ var tView = Ti.UI.createTableView({left: 18, right:18, top: 10});
 
 var loadApps = function(){
   actInd.show();
-  heroku.list(comm.getLogin(), function(list){
+  heroku.list(comm.restoreLogin(), function(list){
     actInd.hide();
     var data = [];
     if(list && list.length > 0){
@@ -26,7 +26,7 @@ var loadApps = function(){
 };
 
 var initView = function(){
-  var login = comm.getLogin();
+  var login = comm.restoreLogin();
 
   if(!login){
     var loginWindow = Ti.UI.createWindow({

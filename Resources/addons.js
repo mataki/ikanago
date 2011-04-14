@@ -10,7 +10,7 @@ var tView = Ti.UI.createTableView({left: 18, right:18, top: 10});
 win.add(tView);
 
 actInd.show();
-heroku.addons(comm.getLogin(), win.appName, function(list){
+heroku.addons(comm.restoreLogin(), win.appName, function(list){
   actInd.hide();
   if(list != null && list.length > 0){
     var data = [];

@@ -28,7 +28,7 @@ submit.addEventListener('click', function(){
   var cmd = textArea.value;
   alert('Not yet supported');
   // actInd.show();
-  // heroku.console(comm.getLogin(), win.appName, cmd, function(result){
+  // heroku.console(comm.restoreLogin(), win.appName, cmd, function(result){
   //   actInd.hide();
   //   resLabel.text = result + "------" + resLabel.text;
   // });

@@ -46,7 +46,7 @@ var mainteSwitch = Ti.UI.createSwitch({
 });
 mainteSwitch.addEventListener('change', function(e){
   actInd.show();
-  heroku.maintenance(comm.getLogin(), appName, e.value, function(result){
+  heroku.maintenance(comm.restoreLogin(), appName, e.value, function(result){
     actInd.hide();
   });
 });
@@ -65,7 +65,7 @@ var restartButton = Ti.UI.createButton({
 win.add(restartButton);
 restartButton.addEventListener('click', function(){
   actInd.show();
-  heroku.restart(comm.getLogin(), appName, function(result){
+  heroku.restart(comm.restoreLogin(), appName, function(result){
     actInd.hide();
     alert(result ? "Restarted" : "Failed to restart");
   });

@@ -6,16 +6,23 @@ var client = function(method, path, options){
   xhr.onload = function(){
     Ti.API.debug("Success to request");
     // Ti.API.debug(this.responseText);
+    Ti.API.info(this.status);
 
-    if(onloadCallback){
-      onloadCallback.call(this);
+    if(this.status == "200"){
+      if(onloadCallback){
+        onloadCallback.call(this);
+      }
+    } else {
+      if(onerrorCallback){
+        onerrorCallback.call(this);
+      }
     }
   };
 
   var onerrorCallback = options.onerrorCallback;
   xhr.onerror = function(){
     Ti.API.debug("Failed to request");
-    Ti.API.debug(this.responseText);
+    // Ti.API.debug(this.responseText);
 
     if(onerrorCallback){
       onerrorCallback.call(this);
@@ -28,6 +35,13 @@ var client = function(method, path, options){
   var login = options.login;
   if(login){
     var authstr = 'Basic ' + Ti.Utils.base64encode(login.email+':'+login.apiKey);
+
+    // On iPhone invalid br is inserted to base64encode string
+    var brPos = authstr.search(/\n/);
+    if(brPos != -1){
+      authstr = authstr.slice(0, brPos-1) + authstr.slice(brPos+1, authstr.length);
+    }
+
     xhr.setRequestHeader('Authorization', authstr);
   }
 
@@ -154,12 +168,12 @@ var updateDynosOrWorkers = function(login, path, qty, callback){
   });
 };
 
-exports.setDynos = function(login, appName, qty, callback){
+exports.adjustDynos = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/dynos";
   updateDynosOrWorkers(login, path, qty, callback);
 };
 
-exports.setWorkers = function(login, appName, qty, callback){
+exports.adjustWorkers = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/workers";
   updateDynosOrWorkers(login, path, qty, callback);
 };

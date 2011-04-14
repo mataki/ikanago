@@ -22,7 +22,7 @@ sView.add(logLabel);
 win.add(sView);
 
 actInd.show();
-heroku.logs(comm.getLogin(), win.appName, function(text){
+heroku.logs(comm.restoreLogin(), win.appName, function(text){
   actInd.hide();
   if(text && text != null){
     logLabel.text = text;

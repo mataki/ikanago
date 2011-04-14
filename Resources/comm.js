@@ -6,7 +6,6 @@ var getLoginFile = function(){
 };
 
 exports.storeLogin = function(login){
-  // Ti.API.debug('Set login / email:' + login.email + " apiKey:" + login.apiKey);
   if(!login.email || !login.apiKey){
     return;
   }
@@ -16,27 +15,21 @@ exports.storeLogin = function(login){
   file.write(json);
 };
 
-exports.getLogin = function(){
+exports.restoreLogin = function(){
   var login = Ti.App.login;
   if(login && login.apiKey){
-    // Ti.API.debug("Get login from App");
     return login;
   }
 
   var file  = getLoginFile();
   if(file.exists()){
-    // Ti.API.debug("File is exists");
     var json = file.read();
-    // Ti.API.debug("[File]" + json);
     if ( !json || json.length <= 0) {
-      // Ti.API.debug('Return login as null, because file is blank.');
       return null;
     }
     var data = JSON.parse(json.text);
-    // Ti.API.debug('Get login from file');
     return data;
   } else {
-    // Ti.API.debug('Get login as null, because file is not exists.');
     return null;
   }
 };

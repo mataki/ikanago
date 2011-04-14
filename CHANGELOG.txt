@@ -1,9 +1,10 @@
 == TODO
-* New version log
+* Fix Design for iPhone
+* View new version log
 * Tools / rake, console
-* Request error on iPhone Basic Auth
 
 == HEAD
+* Request error on iPhone Basic Auth
 * Tools / logs, config
 * Make Logos
 * Collaborators / add delete

@@ -20,9 +20,11 @@ var createRow = function(key, val){
 };
 
 actInd.show();
-heroku.configVars(comm.getLogin(), win.appName, function(result){
+heroku.configVars(comm.restoreLogin(), win.appName, function(result){
   actInd.hide();
+  var data = [];
   for(var i in result){
-    tView.appendRow(createRow(i, result[i]));
+    data.push(createRow(i, result[i]));
   }
+  tView.setData(data);
 });
