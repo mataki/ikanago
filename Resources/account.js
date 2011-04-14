@@ -2,7 +2,7 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 
-var actInd = Titanium.UI.createActivityIndicator({message: "Logged out..."});
+var actInd = Ti.UI.createActivityIndicator({message: "Logged out..."});
 win.add(actInd);
 
 var getLoginStr = function(){
@@ -36,12 +36,12 @@ var logoutButton = Ti.UI.createButton({
 logoutButton.addEventListener('click', function(){
   actInd.show();
   comm.removeLogin();
-  Titanium.App.fireEvent('account_reloaded');
+  Ti.App.fireEvent('account_reloaded');
 });
 
 win.add(logoutButton);
 
-Titanium.App.addEventListener('account_reloaded', function(){
+Ti.App.addEventListener('account_reloaded', function(){
   actInd.hide();
   emailLabel.text = getLoginStr();
 });

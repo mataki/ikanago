@@ -3,7 +3,7 @@ var comm = require('comm');
 
 var win = Ti.UI.currentWindow;
 var appName = win.title;
-var actInd = Titanium.UI.createActivityIndicator({message: "Loading..."});
+var actInd = Ti.UI.createActivityIndicator({message: "Loading..."});
 
 // ---- Table
 var data = [

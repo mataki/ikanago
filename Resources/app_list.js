@@ -6,7 +6,7 @@ var win = Ti.UI.currentWindow;
 var actInd = Ti.UI.createActivityIndicator({message: "Loading..."});
 win.add(actInd);
 
-var tView = Ti.UI.createTableView();
+var tView = Ti.UI.createTableView({left: 18, right:18, top: 10});
 
 var loadApps = function(){
   actInd.show();
@@ -29,7 +29,7 @@ var initView = function(){
   var login = comm.getLogin();
 
   if(!login){
-    var loginWindow = Titanium.UI.createWindow({
+    var loginWindow = Ti.UI.createWindow({
       id: 'loginWindow',
       url: 'login.js',
       backgroundColor: '#33c'
