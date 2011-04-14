@@ -150,12 +150,12 @@ var updateDynosOrWorkers = function(login, path, qty, callback){
 
 exports.setDynos = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/dynos";
-  updateDynosOrWorkers(login, appName, path, callback);
+  updateDynosOrWorkers(login, path, qty, callback);
 };
 
 exports.setWorkers = function(login, appName, qty, callback){
   var path = "/apps/" + appName + "/workers";
-  updateDynosOrWorkers(login, appName, path, callback);
+  updateDynosOrWorkers(login, path, qty, callback);
 };
 
 exports.addons = function(login, appName, callback){
