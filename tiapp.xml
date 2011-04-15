@@ -2,7 +2,7 @@
 <ti:app xmlns:ti="http://ti.appcelerator.org">
 <id>net.mataki.ikanago</id>
 <name>ikanago</name>
-<version>2</version>
+<version>4</version>
 <publisher>mat_aki</publisher>
 <url>https://github.com/mataki/ikanago</url>
 <description>Heroku mobile client</description>

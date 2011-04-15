@@ -4,6 +4,8 @@
 * Tools / rake, console
 
 == HEAD
+
+== android-0004
 * Request error on iPhone Basic Auth
 * Tools / logs, config
 * Make Logos
